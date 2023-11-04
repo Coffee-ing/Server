@@ -8,6 +8,14 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 import json
 
+class PostViewSet(ModelViewSet):
+    queryset = Club.objects.all()
+    serializer_class = PostSerializer
+
+class ListViewSet(ModelViewSet):
+    queryset = Club.objects.all()
+    serializer_class = ListSerializer
+
 @api_view(['GET'])
 def search_clubs(request):
     data = json.loads(request.body)

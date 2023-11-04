@@ -34,10 +34,10 @@ def search_clubs(request):
 
     clubs = Club.objects.all().order_by('-id')
 
-    if keyword == ' ':
-        pass
-    elif keyword: # 제목, 지역, 작성자
+    if keyword:
         clubs = clubs.filter(Q(title__icontains=keyword) | Q(district__icontains=keyword) | Q(organizer__icontains=keyword))
+    else:
+        pass
 
     if sorting == '인기순':
         clubs = clubs.order_by('-like')

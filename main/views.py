@@ -35,3 +35,11 @@ def get_detail(request, post_id):
     club = Club.objects.get(pk=post_id)
     serializer = ClubSerializer(club)
     return Response(serializer.data)
+
+@api_view(['POST', 'GET'])
+def register_club(request, post_id):
+    # if not request.user.is_authenticated:
+    #     return redirect(accounts_views.home)
+    club = get_object_or_404(Club, pk=post_id)
+    MyClub.objects.get_or_create(club=club)
+    return Response({"message": "succeed"})

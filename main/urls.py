@@ -9,6 +9,7 @@ urlpatterns = [
     path('search/', search_clubs, name='search'),
     path('list/<int:post_id>/', get_detail, name="detail"),
     path('list/registration/<int:post_id>/', register_club, name="registration"),
+    path('like/<int:post_id>/', set_wishlist, name="wishlist"),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

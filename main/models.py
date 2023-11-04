@@ -14,3 +14,9 @@ class Club (models.Model):
 
     def __str__(self):
         return str(self.title)
+
+class MyClub(models.Model):
+    club = models.ForeignKey(Club, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return f'[{self.program}] 신청'

@@ -28,3 +28,10 @@ def search_clubs(request):
 
     serializer = ClubSerializer(clubs, many=True)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_detail(request, post_id):
+    club = Club.objects.get(pk=post_id)
+    serializer = ClubSerializer(club)
+    return Response(serializer.data)

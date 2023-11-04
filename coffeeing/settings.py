@@ -51,9 +51,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+
+    # 생성한 앱
     'main',
     'mypage',
+    
     'rest_framework',
+    'rest_framework_simplejwt.token_blacklist',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -133,6 +139,13 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# media 파일
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

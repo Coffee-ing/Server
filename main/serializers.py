@@ -1,14 +1,16 @@
 from rest_framework.serializers import ModelSerializer
-from .models import Post
+from .models import Club
 
 class PostSerializer(ModelSerializer):
     class Meta:
-        model = Post
+        model = Club
         fields = ['title', 
-                  'place', 
-                  'date', 
+                  'district', 
+                  'meet_time', 
                   'num_people', 
-                  'closing_date', 
+                  'deadline_yy',
+                  'deadline_mm',
+                  'deadline_dd', 
                   'tag',
                   'content']
 
@@ -16,6 +18,11 @@ class ListSerializer(PostSerializer): # PostSerializer 상속
     class Meta(PostSerializer.Meta):
         fields = ['title',
                   'tag',
-                  'place',
-                  'date',
-                  'writer']
+                  'district',
+                  'meet_time',
+                  'organizer']
+
+class ClubSerializer(ModelSerializer):
+    class Meta:
+        model = Club
+        fields = '__all__'

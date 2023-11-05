@@ -14,3 +14,11 @@ class MyClubSerializer(ModelSerializer):
     class Meta:
         model = MyClub
         fields = ['id', 'club_id', 'title', 'district', 'meet_time', 'organizer']
+
+
+class MyLikeSerializer(ModelSerializer):
+    club = ClubSerializer()
+
+    class Meta:
+        model = MyLike
+        fields = ['club']

@@ -39,6 +39,7 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
+    path('', include('mypage.urls')),
     path('', include(router.urls)),
     path('list/', post_list),
     path('list/<int:pk>', post_detail),

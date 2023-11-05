@@ -5,6 +5,7 @@ from main.models import *
 from main.serializers import *
 
 class MyClubSerializer(ModelSerializer):
+    club_id = serializers.CharField(source='club.id', read_only=True)
     title = serializers.CharField(source='club.title', read_only=True)
     district = serializers.CharField(source='club.district', read_only=True)
     meet_time = serializers.CharField(source='club.meet_time', read_only=True)
@@ -12,4 +13,4 @@ class MyClubSerializer(ModelSerializer):
 
     class Meta:
         model = MyClub
-        fields = ['id', 'title', 'district', 'meet_time', 'organizer']
+        fields = ['id', 'club_id', 'title', 'district', 'meet_time', 'organizer']

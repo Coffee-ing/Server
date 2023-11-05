@@ -6,7 +6,8 @@ from .views import *
 app_name = "mypage"
 
 urlpatterns = [
-    path('myclub/', get_my_clubs, name='myclub'),
-    path('myclub/<int:post_id>/', delete_my_club, name='delete-myclub'),
+    path('myapply/', get_my_apply, name='myapply'),
+    path('myapply/<int:post_id>/', delete_my_apply, name='delete-myapply'),
+    path('mylike/', get_my_like, name='myapply'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -10,6 +10,13 @@ from rest_framework.decorators import api_view
 import json
 
 @api_view(['GET'])
+def get_my_club(request):
+    if request.method == 'GET':
+        my_post = MyClub.objects.all().order_by('-id')
+        serializers = PostSerializer(my_post, many=True)
+        return Response(serializers.data)
+
+@api_view(['GET'])
 def get_my_apply(request):
     if request.method == 'GET':
         my_clubs = MyClub.objects.all().order_by('-id')

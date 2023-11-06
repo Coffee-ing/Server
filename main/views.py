@@ -13,10 +13,10 @@ class PostViewSet(ModelViewSet):
     queryset = Club.objects.all()
     serializer_class = PostSerializer
 
-
 class ListViewSet(ModelViewSet):
     queryset = Club.objects.all()
     serializer_class = ListSerializer
+    ordering = ['id'] # 디폴트는 최신순 정렬
 
 
 @api_view(['GET'])

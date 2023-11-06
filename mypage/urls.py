@@ -27,7 +27,7 @@ urlpatterns = [
     path('mylike/', get_my_like, name='myapply'),
 
     path('myclub/<int:post_id>/mod', post_detail_put),
-    path('/myclub/<int:post_id>/del', post_detail_delete),
-    path('/myclub/'),
+    path('myclub/<int:post_id>/del', post_detail_delete),
+    path('myclub/', get_my_club), 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

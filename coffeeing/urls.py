@@ -1,27 +1,11 @@
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework import routers
 from main.views import *
 from django.urls import re_path 
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view 
 from drf_yasg import openapi 
 
-router = routers.DefaultRouter()
-router.register('post', PostViewSet)
-router.register('list', ListViewSet)
-
-# post list : GET method
-post_list = ListViewSet.as_view({
-    'get' : 'list'
-})
-
-# post detail : POST, PUT, DELETE method
-post_detail = PostViewSet.as_view({
-    'post' : 'create',
-    'put' : 'update',
-    'delete' : 'destroy'
-})
 
 schema_view = get_schema_view( 
     openapi.Info(
@@ -40,9 +24,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
     path('', include('mypage.urls')),
-    path('', include(router.urls)),
-    path('list/', post_list),
-    path('list/<int:pk>', post_detail),
 
     #swagger
     path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),

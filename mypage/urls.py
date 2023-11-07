@@ -24,7 +24,7 @@ post_detail_delete =  PostViewSet.as_view({
 urlpatterns = [
     path('myapply/', get_my_apply, name='myapply'),
     path('myapply/<int:post_id>/', delete_my_apply, name='delete-myapply'),
-    path('mylike/', get_my_like, name='myapply'),
+    path('mylike/', get_my_like, name='mylike'),
 
     path('myclub/<int:post_id>/mod', post_detail_put),
     path('myclub/<int:post_id>/del', post_detail_delete),

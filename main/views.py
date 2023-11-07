@@ -38,8 +38,10 @@ def search_clubs(request):
         clubs = clubs.filter(Q(title__icontains=keyword) | Q(district__icontains=keyword) | Q(organizer__icontains=keyword))
     else:
         pass
-
-    if sorting == '인기순':
+    
+    if sorting == '최신순':
+        clubs = clubs.order_by('-id')
+    elif sorting == '인기순':
         clubs = clubs.order_by('-like')
     elif sorting == '마감임박순':
         clubs = clubs.order_by('deadline_yy', 'deadline_mm', 'deadline_dd')

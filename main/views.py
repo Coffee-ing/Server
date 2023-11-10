@@ -21,7 +21,7 @@ class ListViewSet(ModelViewSet):
 
 @api_view(['GET'])
 def get_detail(request, post_id):
-    club = Club.objects.get(pk=post_id)
+    club = get_object_or_404(Club, pk=post_id)
     serializer = ClubSerializer(club)
     return Response(serializer.data)
 

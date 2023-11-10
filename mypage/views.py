@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rest_framework.viewsets import ModelViewSet
 from rest_framework import status
 from main.models import *
@@ -36,6 +36,6 @@ def get_my_like(request):
 @require_http_methods(["DELETE"])
 def delete_my_apply(request, post_id):
     if request.method == 'DELETE':
-        my_club = MyClub.objects.get(club_id=post_id)
+        my_club = get_object_or_404(MyClub, pk=post_id)
         my_club.delete()
         return HttpResponse(status=204)

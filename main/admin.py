@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import Club, MyClub, MyLike
 
-# Register your models here.
+admin.site.register(Club)
+admin.site.register(MyClub)
+admin.site.register(MyLike)

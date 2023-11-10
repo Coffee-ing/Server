@@ -30,7 +30,6 @@ def get_detail(request, post_id):
 def search_clubs(request):
     data = json.loads(request.body)
     keyword = data.get('keyword')
-    sorting = data.get('sort')
 
     clubs = Club.objects.all().order_by('-id')
 
@@ -38,7 +37,18 @@ def search_clubs(request):
         clubs = clubs.filter(Q(title__icontains=keyword) | Q(district__icontains=keyword) | Q(organizer__icontains=keyword))
     else:
         pass
-    
+
+    serializer = ClubSerializer(clubs, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def sorting_clubs(request):
+    data = json.loads(request.body)
+    sorting = data.get('sort')
+
+    clubs = Club.objects.all().order_by('-id')
+
     if sorting == '최신순':
         clubs = clubs.order_by('-id')
     elif sorting == '인기순':

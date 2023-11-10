@@ -15,7 +15,7 @@ class PostViewSet(ModelViewSet):
 
 class ListViewSet(ModelViewSet):
     queryset = Club.objects.all()
-    serializer_class = ListSerializer
+    serializer_class = ClubSerializer
     ordering = ['id'] # 디폴트는 최신순 정렬
 
 

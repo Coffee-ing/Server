@@ -25,6 +25,7 @@ post_detail = PostViewSet.as_view({
 urlpatterns = [
     path('search/', search_clubs, name='search'),
     path('sort/', sorting_clubs, name='sort'),
+    path('filter/', filter_category, name='filter'),
     path('list/<int:post_id>/', get_detail, name="detail"),
 
     path('', include(router.urls)),

@@ -6,6 +6,7 @@ from .models import *
 from .serializers import *
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from itertools import chain
 import json
 
 
@@ -82,3 +83,45 @@ def set_wishlist(request, post_id):
         MyLike.objects.create(club=club)
     club.save()
     return Response({"좋아요 개수": club.like, "좋아요 여부": club.iflike})
+
+
+@api_view(['GET'])
+def filter_category(request):
+    data = json.loads(request.body)
+    original = data.get('original')
+    friend = data.get('friend')
+    tour = data.get('tour')
+    worker = data.get('worker')
+    beginner = data.get('beginner')
+    why = data.get('why')
+
+    clubs = Club.objects.all().order_by('-id')
+
+    original_clubs = ""
+    friend_clubs = ""
+    tour_clubs = ""
+    worker_clubs = ""
+    friend_clubs = ""
+    beginner_clubs = ""
+    why_clubs =""
+
+    if original == 'original':
+        original_clubs = clubs.filter(Q(tag__icontains=original))
+    if friend == 'friend':
+        friend_clubs = clubs.filter(Q(tag__icontains=friend))
+    if tour == 'tour':
+        tour_clubs = clubs.filter(Q(tag__icontains=tour))
+    if worker == 'worker':
+        worker_clubs = clubs.filter(Q(tag__icontains=worker))
+    if beginner == 'beginner':
+        beginner_clubs = clubs.filter(Q(tag__icontains=beginner))
+    if why == 'why':
+        why_clubs = clubs.filter(Q(tag__icontains=why))
+
+    if original != 'original'  and friend != 'friend' and tour != 'tour' and worker != 'worker' and beginner != 'beginner' and why != 'why':
+        pass
+    else:
+        clubs = list(chain(original_clubs, friend_clubs, tour_clubs, worker_clubs, beginner_clubs, why_clubs))
+
+    serializer = ClubSerializer(clubs, many=True)
+    return Response(serializer.data)

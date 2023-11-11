@@ -36,7 +36,7 @@ class ListViewSet(ModelViewSet):
 @api_view(['GET'])
 def get_detail(request, post_id):
     club = get_object_or_404(Club, pk=post_id)
-    serializer = ClubSerializer(club)
+    serializer = ClubSerializer(club, context={'request': request})
     response_data = {"coffeeingList": serializer.data}
     Response(response_data)
 
@@ -53,7 +53,7 @@ def search_clubs(request):
     else:
         pass
 
-    serializer = ClubSerializer(clubs, many=True)
+    serializer = ClubSerializer(clubs, many=True, context={'request': request})
     response_data = {"coffeeingList": serializer.data}
     Response(response_data)
 
@@ -72,7 +72,7 @@ def sorting_clubs(request):
     elif sorting == '마감임박순':
         clubs = clubs.order_by('deadline_yy', 'deadline_mm', 'deadline_dd')
 
-    serializer = ClubSerializer(clubs, many=True)
+    serializer = ClubSerializer(clubs, many=True, context={'request': request})
     response_data = {"coffeeingList": serializer.data}
     Response(response_data)
 
@@ -139,6 +139,6 @@ def filter_category(request):
     else:
         clubs = list(chain(original_clubs, friend_clubs, tour_clubs, worker_clubs, beginner_clubs, why_clubs))
 
-    serializer = ClubSerializer(clubs, many=True)
+    serializer = ClubSerializer(clubs, many=True, context={'request': request})
     response_data = {"coffeeingList": serializer.data}
     Response(response_data)

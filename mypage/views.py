@@ -13,7 +13,7 @@ import json
 def get_my_club(request):
     if request.method == 'GET':
         my_post = MyClub.objects.all().order_by('-id')
-        serializer = PostSerializer(my_post, many=True)
+        serializer = PostSerializer(my_post, many=True, context={'request': request})
         data = {"coffeeingList": serializer.data}
 
         return Response(data)
@@ -22,7 +22,7 @@ def get_my_club(request):
 def get_my_apply(request):
     if request.method == 'GET':
         my_clubs = MyClub.objects.all().order_by('-id')
-        serializer = MyClubSerializer(my_clubs, many=True)
+        serializer = MyClubSerializer(my_clubs, many=True, context={'request': request})
         data = {"coffeeingList": serializer.data}
 
         return Response(data)
@@ -32,7 +32,7 @@ def get_my_apply(request):
 def get_my_like(request):
     if request.method == 'GET':
         my_like = MyLike.objects.all().order_by('-id')
-        serializer = MyLikeSerializer(my_like, many=True)
+        serializer = MyLikeSerializer(my_like, many=True, context={'request': request})
         data = {"coffeeingList": serializer.data}
 
         return Response(data)

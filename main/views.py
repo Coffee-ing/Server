@@ -43,15 +43,12 @@ def get_detail(request, post_id):
 
 @api_view(['GET'])
 def search_clubs(request):
-    data = json.loads(request.body)
-    keyword = data.get('keyword')
+    keyword = request.GET.get('keyword', '')
 
     clubs = Club.objects.all().order_by('-id')
 
     if keyword:
-        clubs = clubs.filter(Q(title__icontains=keyword) | Q(district__icontains=keyword) | Q(organizer__icontains=keyword))
-    else:
-        pass
+        clubs = clubs.filter(Q(title__icontains=keyword) | Q(content__icontains=keyword) | Q(district__icontains=keyword) | Q(organizer__icontains=keyword))
 
     serializer = ClubSerializer(clubs, many=True, context={'request': request})
     response_data = {"coffeeingList": serializer.data}
@@ -60,8 +57,7 @@ def search_clubs(request):
 
 @api_view(['GET'])
 def sorting_clubs(request):
-    data = json.loads(request.body)
-    sorting = data.get('sort')
+    sorting = request.GET.get('sort', '')
 
     clubs = Club.objects.all().order_by('-id')
 
@@ -103,13 +99,7 @@ def set_wishlist(request, post_id):
 
 @api_view(['GET'])
 def filter_category(request):
-    data = json.loads(request.body)
-    original = data.get('original')
-    friend = data.get('friend')
-    tour = data.get('tour')
-    worker = data.get('worker')
-    beginner = data.get('beginner')
-    why = data.get('why')
+    tags = request.GET.getlist('tag', [])
 
     clubs = Club.objects.all().order_by('-id')
 
@@ -121,22 +111,22 @@ def filter_category(request):
     beginner_clubs = ""
     why_clubs =""
 
-    if original == 'original':
-        original_clubs = clubs.filter(Q(tag__icontains=original))
-    if friend == 'friend':
-        friend_clubs = clubs.filter(Q(tag__icontains=friend))
-    if tour == 'tour':
-        tour_clubs = clubs.filter(Q(tag__icontains=tour))
-    if worker == 'worker':
-        worker_clubs = clubs.filter(Q(tag__icontains=worker))
-    if beginner == 'beginner':
-        beginner_clubs = clubs.filter(Q(tag__icontains=beginner))
-    if why == 'why':
-        why_clubs = clubs.filter(Q(tag__icontains=why))
+    for tag in tags:
+        # print(f"Received keyword: {tag}")
+        if tag == 'original':
+            original_clubs = clubs.filter(Q(tag__icontains=tag))
+        if tag == 'friend':
+            friend_clubs = clubs.filter(Q(tag__icontains=tag))
+        if tag == 'tour':
+            tour_clubs = clubs.filter(Q(tag__icontains=tag))
+        if tag == 'worker':
+            worker_clubs = clubs.filter(Q(tag__icontains=tag))
+        if tag == 'beginner':
+            beginner_clubs = clubs.filter(Q(tag__icontains=tag))
+        if tag == 'why':
+            why_clubs = clubs.filter(Q(tag__icontains=tag))
 
-    if original != 'original'  and friend != 'friend' and tour != 'tour' and worker != 'worker' and beginner != 'beginner' and why != 'why':
-        pass
-    else:
+    if tags:
         clubs = list(chain(original_clubs, friend_clubs, tour_clubs, worker_clubs, beginner_clubs, why_clubs))
 
     serializer = ClubSerializer(clubs, many=True, context={'request': request})

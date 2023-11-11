@@ -14,17 +14,31 @@ class PostViewSet(ModelViewSet):
     queryset = Club.objects.all()
     serializer_class = PostSerializer
 
+    def list(self, request, *args, **kwargs):
+            queryset = self.get_queryset()
+            serializer = self.get_serializer(queryset, many=True)
+            response_data = {"coffeeingList": serializer.data}
+            return Response(response_data)
+
+
 class ListViewSet(ModelViewSet):
     queryset = Club.objects.all()
     serializer_class = ClubSerializer
     ordering = ['id'] # 디폴트는 최신순 정렬
+    
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        response_data = {"coffeeingList": serializer.data}
+        return Response(response_data)
 
 
 @api_view(['GET'])
 def get_detail(request, post_id):
     club = get_object_or_404(Club, pk=post_id)
     serializer = ClubSerializer(club)
-    return Response(serializer.data)
+    response_data = {"coffeeingList": serializer.data}
+    Response(response_data)
 
 
 @api_view(['GET'])
@@ -40,7 +54,8 @@ def search_clubs(request):
         pass
 
     serializer = ClubSerializer(clubs, many=True)
-    return Response(serializer.data)
+    response_data = {"coffeeingList": serializer.data}
+    Response(response_data)
 
 
 @api_view(['GET'])
@@ -58,7 +73,8 @@ def sorting_clubs(request):
         clubs = clubs.order_by('deadline_yy', 'deadline_mm', 'deadline_dd')
 
     serializer = ClubSerializer(clubs, many=True)
-    return Response(serializer.data)
+    response_data = {"coffeeingList": serializer.data}
+    Response(response_data)
 
 
 @api_view(['GET', 'POST'])
@@ -124,4 +140,5 @@ def filter_category(request):
         clubs = list(chain(original_clubs, friend_clubs, tour_clubs, worker_clubs, beginner_clubs, why_clubs))
 
     serializer = ClubSerializer(clubs, many=True)
-    return Response(serializer.data)
+    response_data = {"coffeeingList": serializer.data}
+    Response(response_data)

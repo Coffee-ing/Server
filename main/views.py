@@ -98,7 +98,7 @@ def set_wishlist(request, post_id):
         club.iflike = True
         MyLike.objects.create(club=club)
     club.save()
-    return Response({"좋아요 개수": club.like, "좋아요 여부": club.iflike})
+    return Response({"Number of likes": club.like, "Like it or not": club.iflike})
 
 
 @api_view(['GET'])

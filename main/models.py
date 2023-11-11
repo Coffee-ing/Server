@@ -1,7 +1,7 @@
 from django.db import models
 
 class Club (models.Model):
-    image = models.ImageField(verbose_name='이미지', null=True, blank=True, default='')
+    image = models.ImageField(verbose_name='이미지', blank=True, default='/default.jpg')
     title = models.CharField(verbose_name='모임이름', max_length=20)
     content = models.TextField(verbose_name='모집 내용')
     num_people = models.IntegerField(verbose_name='모집 인원', default=0)
